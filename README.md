@@ -7,10 +7,9 @@ This example shows how to send temperature and humidity telemetry using a NodeMC
 
 Use visual studio with platformIO for compilation
 
-### Wifi configuration
+### WIFI configuration
 
-Add your wifi information in file `variablesWIFI.c`, following the provided template
-
+Create a new file named `variablesWIFI.c` inside src folder and add your WIFI credentials following the provided template:
 ````c
 char* SSID = "ExampleWLAN";
 char* PASSWORD = "ExampleWLANPassword";
