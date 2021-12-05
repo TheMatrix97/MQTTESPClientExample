@@ -14,7 +14,8 @@ const char* ssid = SSID;
 const char* password = PASSWORD;
 const char* mqtt_server = MQTTBROKER;
 
-WiFiClient espClient;
+//USE WifiClientSecure
+WiFiClientSecure espClient;
 PubSubClient client(espClient);
 
 #define MSG_BUFFER_SIZE	(50)
@@ -92,7 +93,10 @@ void publishTempHumMQTT(float h, float t){
 void setup() {
   Serial.begin(9600); // send and receive at 9600 baud
   setup_wifi();
-  client.setServer(mqtt_server, 1883);
+  //SSL set insecure
+  espClient.setInsecure();
+  //8883 Secure Port
+  client.setServer(mqtt_server, 8883);
   dht.begin();
 }
 
@@ -111,7 +115,9 @@ void loop() {
     return;
   }
   debugSerial(h, t);
+  unsigned long t1 = micros();
   publishTempHumMQTT(h, t);
+  unsigned long t2 = micros();
+  Serial.print("Time taken to publish: "); Serial.print(t2-t1); Serial.println(" micros");
   delay(5000);
-  // put your main code here, to run repeatedly:
 }
